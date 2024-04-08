@@ -1,0 +1,129 @@
+[Version]	=v2.0.5.0
+[ProjectFiles]	=6
+	File_0=C:\Work\Andre65\Tide\Video\Circle.c
+	File_1=C:\Work\Andre65\Tide\Video\Main.c
+	File_2=C:\Work\Andre65\Tide\Video\Video.c
+	File_3=C:\Work\Andre65\Tide\Video\Kernel.asm
+	File_4=C:\Work\Andre65\Tide\Video\Circle.h
+	File_5=C:\Work\Andre65\Tide\Video\Video.h
+[Path]
+	Assembler=wdc816as.exe
+	Compiler=wdc816cc.exe
+	Linker=wdcln.exe
+	Includes=C:\WDC\Tools\include\
+	Library=C:\WDC\Tools\lib\
+	OutputFile=C:\Work\Andre65\Tide\Video\bin\Video.bin
+	RcfConverter=srec_cat.exe
+[Target]
+	TargetSizeSel=1
+	DebugPortType=1
+	TideUsbEnable=false
+	DebugPortNum=-1
+[Compiler]
+	UseMicronasMult=false
+	UsePeepholeOptimize=true
+	MakeAssemblyListing=true
+	MemoryModelSel=3
+	ExtraDefs_0=
+	ExtraDefs_1=
+	ExtraDefs_2=
+	ExtraDefs_3=
+	ExtraDefs_4=
+	ExtraDefs_5=
+[Linker]
+	CODEoffset=10000
+	DATAoffset=20000
+	UDATAoffset=30000
+	KDATAoffset=40000
+	IsDebug=true
+	UseMathLib=true
+	UseStandardLib=true
+	IsStartupObj=true
+	OutputFormatSel=0
+	DoRcfOutput=false
+	DoMemOutput=false
+	MemBlockStart=00008000
+	MemBlockSize=00004000
+	MemBlockCount=2
+[IDE]
+	UseSyntaxHighight=true
+	UseBlankWindow=true
+	ObjOffsetSourceSel=false
+[PlugIn]
+	DebugWorkSel=2
+	DebugWorkPath=C:\WDC\Tools\Projects\W65C02S_Demo
+	EditorWorkSel=2
+	EditorWorkPath=C:\WDC\Tools\Projects\W65C02S_Demo
+	HdlSimWorkSel=1
+	HdlSimWorkPath=C:\Projects\PMCU\W65C02SPMCU
+	FpgaToolWorkSel=1
+	FpgaToolWorkPath=C:\Projects\PMCU\W65C02SPMCU
+	LogicAnalyzeWorkSel=0
+	LogicAnalyzeWorkPath=C:\Program Files\LogicPort\Projects
+[Wind.Main]	
+	IsVisible=true
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=-4,-4,2568,1408
+[Wind.Project]	
+	IsVisible=true
+	IsFloating=false
+	WindState=0
+	Align=0
+	WindShape=1,13,2558,1233
+[Wind.Source_0]	
+	IsVisible=false
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=411,200,368,295
+[Wind.Register]	
+	IsVisible=false
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=286,286,236,180
+[Wind.Listing_0]	
+	IsVisible=true
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=312,312,220,183
+[Wind.Data]	
+	IsVisible=false
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=91,300,1113,455
+[Wind.Watch]	
+	IsVisible=false
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=338,338,206,176
+[Wind.Locals]	
+	IsVisible=false
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=26,26,204,174
+[Wind.Breakpoint]	
+	IsVisible=false
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=52,52,553,209
+[Wind.Decoder]	
+	IsVisible=false
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=78,78,331,145
+[Wind.UsbCapture]	
+	IsVisible=false
+	IsFloating=true
+	WindState=0
+	Align=0
+	WindShape=52,52,563,408
+[END_PROJ]	

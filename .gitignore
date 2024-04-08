@@ -1,0 +1,5 @@
+*.bin
+*.lst
+*.obj
+/Tide/Test/bin/test_sym.txt
+/Tide/V104/C02Monitor_sym.txt

@@ -1,0 +1,144 @@
+CODE
+
+ACIA_DATA 		EQU		$300000
+ACIA_STATUS		EQU		$300001
+ACIA_COMMAND	EQU		$300002		
+ACIA_CONTROL	EQU		$300003
+
+	ORG $0000
+RESET:
+	LONGA OFF
+	LONGI OFF
+
+
+	LDA	#$10			; 115200,N,8,1
+	STA >ACIA_CONTROL
+	LDA #$07			; ALL IRQ disabled
+	STA >ACIA_COMMAND
+	
+	LDA	#$30
+	STA >ACIA_DATA
+
+		LDX #250
+loop0:	DEX
+		NOP
+		NOP
+		NOP
+		NOP
+		NOP
+		BNE loop0
+
+	CLC
+	XCE					; switch to 816 mode
+
+	REP	#$30
+	LONGA	ON
+	LONGI	ON
+	
+	LDA	#$FFFF
+	LDX #$0000
+	LDY #$0000
+	MVN 0,16
+
+	LDA	#$FFFF
+	LDX #$0000
+	LDY #$0000
+	MVN 1,17
+
+	SEP	#$30
+	LONGA	OFF
+	LONGI	OFF
+	LDA #$40			; bank switch ROM/RAM
+	STA $380000
+	LDA #$80
+	STA $280001			; change to 12.5MHz
+
+	SEP	#$20
+	LONGA	OFF
+	REP	#$10
+	LONGI	ON
+	LDX	#0
+	LDY	#0
+	LDA	#0
+write_horizontal_line:
+	STA	 $200000,X
+	INX
+	INY
+	CPY	#320
+	BNE	 write_horizontal_line
+	LDY	#0
+	INC
+	CMP	#200
+	BNE	 write_horizontal_line
+	
+	REP	#$20
+	LONGA	ON
+	LDA #0
+write_diagonal_line:
+	TAX
+	SEP	#$20
+	LONGA	OFF
+	LDA #$FF
+	STA	 $200000,X
+	REP	#$20
+	LONGA	ON
+	TXA
+	CLC
+	ADC #321
+	CMP #64000
+	BCC write_diagonal_line
+
+	SEP	#$30
+	LONGA	OFF
+	LONGI	OFF	
+
+	LDA	#41
+	STA >ACIA_DATA
+	
+FLASH:
+	LDA #$80
+	STA $380000
+	LDA #$00
+	STA $380000
+	
+	JMP FLASH
+	
+OOPS:
+	BRK
+BREAK:
+	JMP BREAK
+
+; This section defines the interrupt and reset vectors.	
+
+	ORG	$FFE4
+
+N_COP   DW	RESET
+N_BRK   DW	BREAK
+N_ABORT DW	RESET
+N_NMI   DW	RESET
+N_RSRVD DW	0
+N_IRQ   DW	RESET
+	DS	4
+E_COP   DW	RESET
+E_RSRVD DW	0
+E_ABORT DW	RESET
+E_NMI   DW	RESET
+E_RESET DW	RESET
+E_IRQ   DW	RESET
+
+
+ENDS
+
+MYDATA SECTION  ;define section in bank 1
+
+	ORG	$010000
+
+MYDATA:	DB		$41
+
+
+
+
+	
+	END
+	
+	
