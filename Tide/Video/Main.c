@@ -16,7 +16,7 @@ void Pause(uint32_t uiDelay)
 	return;
 }
 
-unsigned char* guiVideoMemory;
+uint8_t* guiVideoMemory;
 
 
 void DrawBlockTest(uint16_t uiBlock, uint16_t uiColour)
@@ -46,10 +46,7 @@ void main(void)
 	
 	guiVideoMemory = (unsigned char*)0x200000;
 	y = 0;
-	
-	pv = malloc(3);
-	free(pv);
-	
+
 	DrawBlockTest(y++, RGB(7, 7, 3));
 
 	DrawBlockTest(y++, RGB(0, 0, 0));
@@ -107,6 +104,11 @@ void main(void)
 	DrawBlockTest(y++, RGB(0, 7, 3));
 	
 	DrawBlockTest(y++, RGB(7, 7, 3));
+	
+	SetImageParameters((void*)0x200000, 320, 200);
+	DrawCircle(50, 60, 20, 0xff);
+	DrawCircle(300, 110, 40, 0xff);
+	DrawCircle(150, 10, 35, RGB(7, 7, 0));
 	
 	for (;;)
 	{
