@@ -3,3 +3,5 @@
 *.obj
 /Tide/Test/bin/test_sym.txt
 /Tide/V104/C02Monitor_sym.txt
+/Tide/Video/bin/Video.map
+/Tide/Video/bin/Video.sym

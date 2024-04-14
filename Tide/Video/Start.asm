@@ -70,7 +70,7 @@ START:
         TCS
 
 
-        ; Copy the first 5 banks from ROM into RAM
+        ; Copy the first 8 banks from ROM into RAM
         LDA	#$FFFF
         LDX #$0000
         LDY #$0000
@@ -157,8 +157,10 @@ START:
 	ELSEIF	LARGE
         XREF  ~~main
         JSL   ~~main
-        WAI
 	ENDIF
+WAIT:
+        WAI
+		JMP WAIT
 
     ;   Install C IRG Handler
 	IF	SMALL
