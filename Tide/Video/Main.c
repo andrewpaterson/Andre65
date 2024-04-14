@@ -105,9 +105,14 @@ void main(void)
 	
 	DrawBlockTest(y++, RGB(7, 7, 3));
 	
+	pv = farmalloc(10);
+	
 	SetImageParameters((void*)0x200000, 320, 200);
 	DrawCircle(50, 60, 20, 0xff);
 	DrawCircle(300, 110, 40, 0xff);
+	
+	farfree(pv);
+	
 	DrawCircle(150, 10, 35, RGB(7, 7, 0));
 	
 	for (;;)

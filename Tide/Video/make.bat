@@ -8,5 +8,6 @@ wdc816cc.exe  -bs -DUSING_816 -ml -wr -wu -so -sp -lt -pb -pp -px -o Image.obj I
 wdc816cc.exe  -bs -DUSING_816 -ml -wr -wu -so -sp -lt -pb -pp -px -o Circle.obj Circle.c
 wdc816cc.exe  -bs -DUSING_816 -ml -wr -wu -so -sp -lt -pb -pp -px -o Main.obj Main.c
 
-wdcln.exe  -C10000 -D80000 -g -t -sz -HB -obin\Video.bin Heap.obj Image.obj Circle.obj Main.obj StartASM.obj GraphicsASM.obj -lcl -lml
+wdcln.exe -C10000 -D20000 -g -t -sz -HIE -obin\Video.hex Heap.obj Image.obj Circle.obj Main.obj StartASM.obj GraphicsASM.obj -lcl -lml
+srec_cat.exe -IGnore-Checksums bin\Video.hex -Intel mult.hex -Intel -o bin/rom.hex -Intel
 pause
