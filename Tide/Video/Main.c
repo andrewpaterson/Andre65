@@ -88,59 +88,6 @@ void InitCircleStruct(struct SGCircle* psCircle, int16_t x, int16_t y, int16_t r
 }
 
 
-void RandomiseScreen(int16_t* piRandom, uint16_t uiRandomLength)
-{
-	int16_t x;
-	int16_t y;
-	int16_t xr;
-	int16_t yr;
-	int16_t r;
-	uint8_t uiColour;
-	uint16_t uiRandomIndex;
-	uint16_t i;
-	uint8_t* pui;
-	
-	pui = GetImageMemory();
-	uiRandomIndex = 0;
-	for (y = 0; y < 200; y++)
-	{
-		for (x = 0; x < 320; x++)
-		{
-			uiColour = *(pui + (y * 320) + x);
-			for (i = 0; i < 10; i++)
-			{
-				r = piRandom[uiRandomIndex];
-				uiRandomIndex++;
-				if (uiRandomIndex == uiRandomLength)
-				{
-					uiRandomIndex = 0;
-				}
-				
-				xr = x + r;
-				if ((xr >= 0) && (xr < 320))
-				{
-					break;
-				}
-			}
-			for (i = 0; i < 10; i++)
-			{
-				r = piRandom[uiRandomIndex];
-				uiRandomIndex++;
-				if (uiRandomIndex == uiRandomLength)
-				{
-					uiRandomIndex = 0;
-				}
-
-				yr = y + r;
-				if ((yr >= 0) && (yr < 200))
-				{
-					break;
-				}
-			}
-			*(pui + (yr * 320) + xr) = uiColour;
-		}
-	}
-}
 
 
 void InitCircles(struct SGCircle* pasCircle, uint16_t uiNumCircles)
@@ -195,7 +142,7 @@ void main(void)
 	uiRandomLength = 1787;
 	piRandom = GenerateRandom(uiRandomLength);
 
-	RandomiseScreen(piRandom, uiRandomLength);
+	DrawSplatter();
 	
 	memcpy(pvBackground, (void*)GetImageMemory(), 64000);
 

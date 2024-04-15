@@ -4,6 +4,7 @@
 
 
 int16_t* GenerateRandom(uint16_t uiRandomLength);
+void DrawSplatter(void);
 
 
 #endif // __SPLATTER_H__

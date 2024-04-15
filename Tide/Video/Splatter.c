@@ -1,21 +1,96 @@
 #include "stdlib.h"
+#include "Image.h"
 #include "Splatter.h"
 
 
 int16_t* GenerateRandom(uint16_t uiRandomLength)
 {
-	uint16_t			y;
-	uint16_t			r;
-	uint16_t			x;
-	uint16_t*			piRandom;
+	uint16_t	y;
+	int16_t		r;
+	int16_t*	piRandom;
 	
-	piRandom = farmalloc(uiRandomLength * sizeof(int16_t));  //farmalloc doesn't seem to be able to allocate more than 65KB total.
+	piRandom = farmalloc(uiRandomLength * sizeof(int16_t));  //farmalloc doesn't seem to be able to allocate more than 64KB total.
 	for (y = 0; y < uiRandomLength; y++)
 	{
-		x = rand();
-		r = x % 7 - 3;
+		r = rand() % 7 - 3;
 		piRandom[y] = r;
 	}
-	return (int16_t*)piRandom;
+	return piRandom;
+}
+
+
+void DrawSplatter(void)
+{
+	int16_t x;
+	int16_t y;
+	int16_t xr;
+	int16_t yr;
+	int16_t r;
+	uint8_t uiColour;
+	uint16_t uiRandomIndex;
+	uint16_t i;
+	uint8_t* pui;
+	uint16_t uiWidth;
+	uint16_t uiHeight;
+	uint16_t uiRetries;
+	int16_t* piRandom;
+	uint16_t uiRandomLength;
+	
+	uiWidth = GetImageWidth();
+	uiHeight = GetImageHeight();
+	
+	uiRandomLength = (uiWidth * uiHeight) / 35;
+	if (uiRandomLength < 100)
+	{
+		uiRandomLength = 100;
+	}
+	uiRandomLength += rand() % 12;
+	piRandom = GenerateRandom(uiRandomLength);
+	
+	pui = GetImageMemory();
+	uiRetries = 10;
+	uiRandomIndex = 0;
+	for (y = 0; y < uiHeight; y++)
+	{
+		for (x = 0; x < uiWidth; x++)
+		{
+			uiColour = *(pui + (y * uiWidth) + x);
+			for (i = 0; i < uiRetries; i++)
+			{
+				r = piRandom[uiRandomIndex];
+				uiRandomIndex++;
+				if (uiRandomIndex == uiRandomLength)
+				{
+					uiRandomIndex = 0;
+				}
+				
+				xr = x + r;
+				if ((xr >= 0) && (xr < uiWidth))
+				{
+					break;
+				}
+			}
+			
+			for (i = 0; i < uiRetries; i++)
+			{
+				r = piRandom[uiRandomIndex];
+				uiRandomIndex++;
+				if (uiRandomIndex == uiRandomLength)
+				{
+					uiRandomIndex = 0;
+				}
+
+				yr = y + r;
+				if ((yr >= 0) && (yr < uiHeight))
+				{
+					break;
+				}
+			}
+			
+			*(pui + (yr * uiWidth) + xr) = uiColour;
+		}
+	}
+	
+	farfree(piRandom);
 }
 
