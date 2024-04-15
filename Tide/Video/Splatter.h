@@ -1,0 +1,9 @@
+#ifndef __SPLATTER_H__
+#define __SPLATTER_H__
+#include "inttypes.h"
+
+
+int16_t* GenerateRandom(uint16_t uiRandomLength);
+
+
+#endif // __SPLATTER_H__

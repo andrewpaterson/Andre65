@@ -2,6 +2,7 @@
 #include "stdlib.h"
 #include "inttypes.h"
 #include "Image.h"
+#include "Splatter.h"
 #include "Circle.h"
 
 
@@ -87,7 +88,7 @@ void InitCircleStruct(struct SGCircle* psCircle, int16_t x, int16_t y, int16_t r
 }
 
 
-void RandomiseScreen(far int16_t* piRandom, uint16_t uiLength)
+void RandomiseScreen(int16_t* piRandom, uint16_t uiRandomLength)
 {
 	int16_t x;
 	int16_t y;
@@ -110,7 +111,7 @@ void RandomiseScreen(far int16_t* piRandom, uint16_t uiLength)
 			{
 				r = piRandom[uiRandomIndex];
 				uiRandomIndex++;
-				if (uiRandomIndex == uiLength)
+				if (uiRandomIndex == uiRandomLength)
 				{
 					uiRandomIndex = 0;
 				}
@@ -125,7 +126,7 @@ void RandomiseScreen(far int16_t* piRandom, uint16_t uiLength)
 			{
 				r = piRandom[uiRandomIndex];
 				uiRandomIndex++;
-				if (uiRandomIndex == uiLength)
+				if (uiRandomIndex == uiRandomLength)
 				{
 					uiRandomIndex = 0;
 				}
@@ -138,19 +139,6 @@ void RandomiseScreen(far int16_t* piRandom, uint16_t uiLength)
 			}
 			*(pui + (yr * 320) + xr) = uiColour;
 		}
-	}
-}
-
-
-void GenerateRandom(far int16_t* piRandom, uint16_t uiLength)
-{
-	uint16_t	i;
-	int16_t		r;
-	
-	for (i = 0; i < uiLength; i++)
-	{
-		r = rand() % 7 - 3;
-		piRandom[i] = 0;
 	}
 }
 
@@ -189,8 +177,8 @@ void main(void)
 	uint8_t				t;
 	
 	unsigned char 		c;
-	far void*			pvBackground;
-	far int16_t*		piRandom;
+	void*				pvBackground;
+	int16_t*			piRandom;
 	unsigned char 		i;
 	int16_t				r;
 	uint16_t			uiRandomLength;
@@ -205,13 +193,7 @@ void main(void)
 	pvBackground = (void*)0x220000;
 	
 	uiRandomLength = 1787;
-	piRandom = farmalloc(uiRandomLength * sizeof(int16_t));  //farmalloc doesn't seem to be able to allocate more than 65KB total.
-	//GenerateRandom(piRandom, uiRandomLength);
-	for (y = 0; y < uiRandomLength; y++)
-	{
-		r = rand() % 7 - 3;
-		piRandom[y] = r;
-	}
+	piRandom = GenerateRandom(uiRandomLength);
 
 	RandomiseScreen(piRandom, uiRandomLength);
 	
