@@ -41,6 +41,7 @@ _RGB_R				EQU	_RGB_Scratch+3+1		;RTL address + 1
 	PHD
 	TCD
 
+;behaviour
 	LDA <_RGB_B
 	ASL
 	ASL

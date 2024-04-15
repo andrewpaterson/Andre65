@@ -88,8 +88,6 @@ void InitCircleStruct(struct SGCircle* psCircle, int16_t x, int16_t y, int16_t r
 }
 
 
-
-
 void InitCircles(struct SGCircle* pasCircle, uint16_t uiNumCircles)
 {
 	uint16_t	i;
