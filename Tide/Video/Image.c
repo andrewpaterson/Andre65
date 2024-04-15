@@ -34,3 +34,9 @@ void DrawPixel(int16_t x, int16_t y, uint8_t uiColour)
 	*(guiImageMemory + (y * guiImageWidth) + x) = uiColour;
 }
 
+
+uint8_t* GetImageMemory(void)
+{
+	return guiImageMemory;
+}
+

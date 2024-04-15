@@ -116,8 +116,8 @@ START:
         LONGA	OFF
         LONGI	OFF
         LDA #$40			; bank switch ROM/RAM
-
         STA $380000
+		
         LDA #$80
         STA $280001			; change to 12.5MHz
 
