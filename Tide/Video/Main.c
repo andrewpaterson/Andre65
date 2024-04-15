@@ -16,7 +16,7 @@ void Pause(uint32_t uiDelay)
 	return;
 }
 
-uint8_t* guiVideoMemory;
+far uint8_t* guiVideoMemory;
 
 
 struct SCircle
@@ -30,16 +30,16 @@ struct SCircle
 struct SGCircle
 {
 	struct SCircle	sCircle;
-	int16_t xs;
-	int16_t ys;
-	uint16_t c;
+	int16_t 		xs;
+	int16_t 		ys;
+	uint16_t 		c;
 };
 
 
 void DrawBlockTest(uint16_t uiBlock, uint16_t uiColour)
 {
     unsigned short xs;
-	for (xs = uiBlock*4*320; xs < uiBlock*4*320 + 320*4; xs++)
+	for (xs = uiBlock*2*320; xs < uiBlock*2*320 + 320*2; xs++)
 	{
 		*(guiVideoMemory + xs) = uiColour;
 	}
@@ -99,7 +99,7 @@ void InitCircleStruct(struct SGCircle* psCircle, int16_t x, int16_t y, int16_t r
 }
 
 
-void RandomiseScreen(void)
+void RandomiseScreen(far int16_t* piRandom, uint16_t uiLength)
 {
 	int16_t x;
 	int16_t y;
@@ -107,24 +107,39 @@ void RandomiseScreen(void)
 	int16_t yr;
 	int16_t r;
 	uint8_t uiColour;
+	uint16_t uiRandomIndex;
+	uint16_t i;
 	
+	uiRandomIndex = 0;
 	for (y = 0; y < 200; y++)
 	{
 		for (x = 0; x < 320; x++)
 		{
 			uiColour = *(guiVideoMemory + (y * 320) + x);
-			for (;;)
+			for (i = 0; i < 10; i++)
 			{
-				r = rand() % 7 - 3;
+				r = piRandom[uiRandomIndex];
+				uiRandomIndex++;
+				if (uiRandomIndex == uiLength)
+				{
+					uiRandomIndex = 0;
+				}
+				
 				xr = x + r;
 				if ((xr >= 0) && (xr < 320))
 				{
 					break;
 				}
 			}
-			for (;;)
+			for (i = 0; i < 10; i++)
 			{
-				r = rand() % 7 - 3;
+				r = piRandom[uiRandomIndex];
+				uiRandomIndex++;
+				if (uiRandomIndex == uiLength)
+				{
+					uiRandomIndex = 0;
+				}
+
 				yr = y + r;
 				if ((yr >= 0) && (yr < 200))
 				{
@@ -137,13 +152,29 @@ void RandomiseScreen(void)
 }
 
 
+void GenerateRandom(far int16_t* piRandom, uint16_t uiLength)
+{
+	uint16_t	i;
+	int16_t		r;
+	
+	for (i = 0; i < uiLength; i++)
+	{
+		r = rand() % 7 - 3;
+		piRandom[i] = 0;
+	}
+}
+
+
 void main(void)
 {
 	uint8_t				t;
 	unsigned int 		y;
 	unsigned char 		c;
-	far void*			pv;
+	far void*			pvBackground;
+	far int16_t*		piRandom;
 	unsigned char 		i;
+	int16_t				r;
+	uint16_t			uiRandomLength;
 	
 	struct SGCircle		asCircle[10];
 	
@@ -151,6 +182,7 @@ void main(void)
 	y = 0;
 
 	DrawBlockTest(y++, RGB(7, 7, 3));
+	DrawBlockTest(y++, RGB(3, 3, 1));
 
 	DrawBlockTest(y++, RGB(0, 0, 0));
 	DrawBlockTest(y++, RGB(1, 0, 0));
@@ -160,6 +192,14 @@ void main(void)
 	DrawBlockTest(y++, RGB(5, 0, 0));
 	DrawBlockTest(y++, RGB(6, 0, 0));
 	DrawBlockTest(y++, RGB(7, 0, 0));
+	DrawBlockTest(y++, RGB(7, 0, 0));
+	DrawBlockTest(y++, RGB(6, 0, 0));
+	DrawBlockTest(y++, RGB(5, 0, 0));
+	DrawBlockTest(y++, RGB(4, 0, 0));
+	DrawBlockTest(y++, RGB(3, 0, 0));
+	DrawBlockTest(y++, RGB(2, 0, 0));
+	DrawBlockTest(y++, RGB(1, 0, 0));
+	DrawBlockTest(y++, RGB(0, 0, 0));
 
 	DrawBlockTest(y++, RGB(0, 0, 0));
 	DrawBlockTest(y++, RGB(0, 1, 0));
@@ -169,6 +209,14 @@ void main(void)
 	DrawBlockTest(y++, RGB(0, 5, 0));
 	DrawBlockTest(y++, RGB(0, 6, 0));
 	DrawBlockTest(y++, RGB(0, 7, 0));
+	DrawBlockTest(y++, RGB(0, 7, 0));
+	DrawBlockTest(y++, RGB(0, 6, 0));
+	DrawBlockTest(y++, RGB(0, 5, 0));
+	DrawBlockTest(y++, RGB(0, 4, 0));
+	DrawBlockTest(y++, RGB(0, 3, 0));
+	DrawBlockTest(y++, RGB(0, 2, 0));
+	DrawBlockTest(y++, RGB(0, 1, 0));
+	DrawBlockTest(y++, RGB(0, 0, 0));
 
 	DrawBlockTest(y++, RGB(0, 0, 0));
 	DrawBlockTest(y++, RGB(0, 0, 0));
@@ -178,6 +226,14 @@ void main(void)
 	DrawBlockTest(y++, RGB(0, 0, 2));
 	DrawBlockTest(y++, RGB(0, 0, 3));
 	DrawBlockTest(y++, RGB(0, 0, 3));
+	DrawBlockTest(y++, RGB(0, 0, 3));
+	DrawBlockTest(y++, RGB(0, 0, 3));
+	DrawBlockTest(y++, RGB(0, 0, 2));
+	DrawBlockTest(y++, RGB(0, 0, 2));
+	DrawBlockTest(y++, RGB(0, 0, 1));
+	DrawBlockTest(y++, RGB(0, 0, 1));
+	DrawBlockTest(y++, RGB(0, 0, 0));
+	DrawBlockTest(y++, RGB(0, 0, 0));
 
 	DrawBlockTest(y++, RGB(0, 0, 0));
 	DrawBlockTest(y++, RGB(1, 1, 0));
@@ -187,6 +243,14 @@ void main(void)
 	DrawBlockTest(y++, RGB(5, 5, 0));
 	DrawBlockTest(y++, RGB(6, 6, 0));
 	DrawBlockTest(y++, RGB(7, 7, 0));
+	DrawBlockTest(y++, RGB(7, 7, 0));
+	DrawBlockTest(y++, RGB(6, 6, 0));
+	DrawBlockTest(y++, RGB(5, 5, 0));
+	DrawBlockTest(y++, RGB(4, 4, 0));
+	DrawBlockTest(y++, RGB(3, 3, 0));
+	DrawBlockTest(y++, RGB(2, 2, 0));
+	DrawBlockTest(y++, RGB(1, 1, 0));
+	DrawBlockTest(y++, RGB(0, 0, 0));
 
 	DrawBlockTest(y++, RGB(0, 0, 0));
 	DrawBlockTest(y++, RGB(1, 0, 0));
@@ -196,6 +260,14 @@ void main(void)
 	DrawBlockTest(y++, RGB(5, 0, 2));
 	DrawBlockTest(y++, RGB(6, 0, 3));
 	DrawBlockTest(y++, RGB(7, 0, 3));
+	DrawBlockTest(y++, RGB(7, 0, 3));
+	DrawBlockTest(y++, RGB(6, 0, 3));
+	DrawBlockTest(y++, RGB(5, 0, 2));
+	DrawBlockTest(y++, RGB(4, 0, 2));
+	DrawBlockTest(y++, RGB(3, 0, 1));
+	DrawBlockTest(y++, RGB(2, 0, 1));
+	DrawBlockTest(y++, RGB(1, 0, 0));
+	DrawBlockTest(y++, RGB(0, 0, 0));
 	
 	DrawBlockTest(y++, RGB(0, 0, 0));
 	DrawBlockTest(y++, RGB(0, 1, 0));
@@ -205,14 +277,32 @@ void main(void)
 	DrawBlockTest(y++, RGB(0, 5, 2));
 	DrawBlockTest(y++, RGB(0, 6, 3));
 	DrawBlockTest(y++, RGB(0, 7, 3));
-	
+	DrawBlockTest(y++, RGB(0, 7, 3));
+	DrawBlockTest(y++, RGB(0, 6, 3));
+	DrawBlockTest(y++, RGB(0, 5, 2));
+	DrawBlockTest(y++, RGB(0, 4, 2));
+	DrawBlockTest(y++, RGB(0, 3, 1));
+	DrawBlockTest(y++, RGB(0, 2, 1));
+	DrawBlockTest(y++, RGB(0, 1, 0));
+	DrawBlockTest(y++, RGB(0, 0, 0));
+
+	DrawBlockTest(y++, RGB(3, 3, 1));
 	DrawBlockTest(y++, RGB(7, 7, 3));
+
+	pvBackground = (far void*)0x220000;
 	
-	RandomiseScreen();
+	uiRandomLength = 1787;
+	piRandom = farmalloc(uiRandomLength * sizeof(int16_t));  //farmalloc doesn't seem to be able to allocate more than 65KB total.
+	//GenerateRandom(piRandom, uiRandomLength);
+	for (y = 0; y < uiRandomLength; y++)
+	{
+		r = rand() % 7 - 3;
+		piRandom[y] = r;
+	}
+
+	RandomiseScreen(piRandom, uiRandomLength);
 	
-	pv = farmalloc(64000);
-	
-	memcpy(pv, (void*)guiVideoMemory, 64000);
+	memcpy(pvBackground, guiVideoMemory, 64000);
 	
 	InitCircleStruct(&asCircle[0], 50, 60, 20, 2, 1, 0xff);
 	InitCircleStruct(&asCircle[1], 110, 110, 30, -1, 3, RGB(7, 0, 3));
@@ -227,9 +317,15 @@ void main(void)
 	
 	SetImageParameters((void*)0x200000, 320, 200);
 
+	y = 0;
 	for (;;)
 	{
-		memcpy((void*)guiVideoMemory, pv, 64000);
+		y++;
+		if (y == 3)
+		{
+			memcpy((void*)guiVideoMemory, pvBackground, 64000);
+			y = 0;
+		}
 		
 		for (i = 0; i < 10; i++)
 		{
@@ -237,7 +333,8 @@ void main(void)
 			MoveCircleStruct(&asCircle[i]);
 		}
 	}
-	farfree(pv);
+	farfree(piRandom);
+	farfree(pvBackground);
     return;
 }
 
