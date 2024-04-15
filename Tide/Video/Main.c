@@ -6,26 +6,6 @@
 #include "Circle.h"
 
 
-void Pause(uint32_t uiDelay)
-{
-	uint32_t x;
-	for (x = 0; x < uiDelay; x++)
-	{
-#asm
-	nop
-#endasm	
-	}
-	return;
-}
-
-struct SCircle
-{
-	int16_t x;
-	int16_t y;
-	int16_t r;
-};
-
-
 struct SGCircle
 {
 	struct SCircle	sCircle;
@@ -79,9 +59,7 @@ void MoveCircleStruct(struct SGCircle* psCircle)
 
 void InitCircleStruct(struct SGCircle* psCircle, int16_t x, int16_t y, int16_t r, int16_t xs, int16_t ys, uint16_t c)
 {
-	psCircle->sCircle.x = x;
-	psCircle->sCircle.y = y;
-	psCircle->sCircle.r = r;
+	InitCircle(&psCircle->sCircle, x, y, r);
 	psCircle->xs = xs;
 	psCircle->ys = ys;
 	psCircle->c = c;
