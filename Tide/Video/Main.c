@@ -125,10 +125,8 @@ void main(void)
 	
 	unsigned char 		c;
 	void*				pvBackground;
-	int16_t*			piRandom;
 	unsigned char 		i;
 	int16_t				r;
-	uint16_t			uiRandomLength;
 	
 	struct SGCircle*	pasCircle;
 	uint16_t			uiNumCircles;
@@ -139,9 +137,6 @@ void main(void)
 
 	pvBackground = (void*)0x220000;
 	
-	uiRandomLength = 1787;
-	piRandom = GenerateRandom(uiRandomLength);
-
 	DrawSplatter();
 	
 	memcpy(pvBackground, (void*)GetImageMemory(), 64000);
@@ -204,7 +199,6 @@ void main(void)
 		
 		*((uint8_t*)0x280000) = 1;
 	}
-	farfree(piRandom);
 	farfree(pvBackground);
     return;
 }

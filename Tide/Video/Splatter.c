@@ -3,7 +3,7 @@
 #include "Splatter.h"
 
 
-int16_t* GenerateRandom(uint16_t uiRandomLength)
+int16_t* AllocateRandomArray(uint16_t uiRandomLength, uint16_t uiModulus, int16_t uiOffset)
 {
 	uint16_t	y;
 	int16_t		r;
@@ -12,7 +12,7 @@ int16_t* GenerateRandom(uint16_t uiRandomLength)
 	piRandom = farmalloc(uiRandomLength * sizeof(int16_t));  //farmalloc doesn't seem to be able to allocate more than 64KB total.
 	for (y = 0; y < uiRandomLength; y++)
 	{
-		r = rand() % 7 - 3;
+		r = (rand() % uiModulus) + uiOffset;
 		piRandom[y] = r;
 	}
 	return piRandom;
@@ -45,7 +45,7 @@ void DrawSplatter(void)
 		uiRandomLength = 100;
 	}
 	uiRandomLength += rand() % 12;
-	piRandom = GenerateRandom(uiRandomLength);
+	piRandom = AllocateRandomArray(uiRandomLength, 9, -5);
 	
 	pui = GetImageMemory();
 	uiRetries = 10;
