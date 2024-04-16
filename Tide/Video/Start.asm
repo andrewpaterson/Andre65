@@ -178,7 +178,7 @@ IRQ:
 		LONGA	ON
 		LONGI	ON
 		rep	#$30
-				;Example of needing to read/write to data in another data bank
+
 	IF	SMALL
 	ELSEIF	MEDIUM
 		plb		; set data bank register to _DATA

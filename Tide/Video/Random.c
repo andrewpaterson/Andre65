@@ -8,7 +8,7 @@ int16_t* AllocateRandomArray(uint16_t uiRandomLength, uint16_t uiModulus, int16_
 	int16_t		r;
 	int16_t*	piRandom;
 	
-	piRandom = farmalloc(uiRandomLength * sizeof(int16_t));  //farmalloc doesn't seem to be able to allocate more than 64KB total.
+	piRandom = farmalloc(uiRandomLength * sizeof(int16_t));
 	for (y = 0; y < uiRandomLength; y++)
 	{
 		r = (rand() % uiModulus) + uiOffset;

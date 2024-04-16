@@ -1,0 +1,178 @@
+  Tue Apr 16 2024  8:03                                                Page 1
+
+
+                     ***************************************
+                     **      WDC 65C816 Macro Assembler   **
+                     **                                   **
+                     **     Version 3.49.1- Feb  6 2006    **
+                     ***************************************
+
+     1                        ;:ts=8
+     2             00000001   R0	equ	1
+     3             00000005   R1	equ	5
+     4             00000009   R2	equ	9
+     5             0000000D   R3	equ	13
+     6                        	.file	"C:\Work\Andre65\Tide\Video\Random.c",0
+     7                        ;#include "stdlib.h"
+     8                        	.file	"C:\WDC\Tools\INCLUDE\stdlib.h",0
+     9                        	.file	"C:\WDC\Tools\INCLUDE\stddef.h",0
+    10                        	.line	88
+    11                        	.file	"C:\WDC\Tools\INCLUDE\stdlib.h",43
+    12                        	.stag	fake1_,32,1
+    13                        	.member	quot,0,5,8,16
+    14                        	.member	rem,16,5,8,16
+    15                        	.eos
+    16                        	.stag	fake2_,64,2
+    17                        	.member	quot,0,7,8,32
+    18                        	.member	rem,32,7,8,32
+    19                        	.eos
+    20                        	.stag	int_sqrt,32,3
+    21                        	.member	sqrt,0,16,8,16
+    22                        	.member	frac,16,16,8,16
+    23                        	.eos
+    24                        	.line	205
+    25                        	.file	"C:\Work\Andre65\Tide\Video\Random.c",1
+    26                        ;#include "inttypes.h"
+    27                        	.file	"C:\WDC\Tools\INCLUDE\inttypes.h",0
+    28                        	.stag	fake4_,64,4
+    29                        	.member	quot,0,7,8,32
+    30                        	.member	rem,32,7,8,32
+    31                        	.eos
+    32                        	.line	111
+    33                        	.file	"C:\Work\Andre65\Tide\Video\Random.c",2
+    34                        ;
+    35                        ;
+    36                        ;int16_t* AllocateRandomArray(uint16_t uiRandomLen
+                    gth, uint16_t uiModulus, int16_t uiOffset)
+    37                        ;{
+    38                        	.line	5
+    39                        	.line	6
+    40                        	code
+    41                        	xdef	~~AllocateRandomArray
+    42                        	func
+    43                        	.function	6
+    44                        ~~AllocateRandomArray:
+    45                        	longa	on
+    46                        	longi	on
+    47 00:0000: 3B           	tsc
+    48 00:0001: 38           	sec
+    49 00:0002: E9 0C 00     	sbc	#L2
+    50 00:0005: 1B           	tcs
+    51 00:0006: 0B           	phd
+    52 00:0007: 5B           	tcd
+    53             00000004   uiRandomLength_0	set	4
+    54             00000006   uiModulus_0	set	6
+    55             00000008   uiOffset_0	set	8
+    56                        	.block	6
+    57                        ;	uint16_t	y;
+    58                        ;	int16_t		r;
+    59                        ;	int16_t*	piRandom;
+    60                        ;	
+    61                        ;	piRandom = farmalloc(uiRandomLength * sizeof(int
+                    16_t));  
+    62             00000000   y_1	set	0
+    63             00000002   r_1	set	2
+    64             00000004   piRandom_1	set	4
+    65                        	.sym	y,0,16,1,16
+    66                        	.sym	r,2,5,1,16
+    67                        	.sym	piRandom,4,133,1,32
+    68                        	.sym	uiRandomLength,4,16,6,16
+    69                        	.sym	uiModulus,6,16,6,16
+    70                        	.sym	uiOffset,8,5,6,16
+    71                        	.line	11
+    72 00:0008: A5 10        	lda	<L2+uiRandomLength_0
+    73 00:000A: 0A           	asl	A
+    74 00:000B: 85 01        	sta	<R0
+    75 00:000D: 64 03        	stz	<R0+2
+    76 00:000F: D4 03        	pei	<R0+2
+    77 00:0011: D4 01        	pei	<R0
+    78 00:0013: 22 xx xx xx  	jsl	~~farmalloc
+    79 00:0017: 85 09        	sta	<L3+piRandom_1
+    80 00:0019: 86 0B        	stx	<L3+piRandom_1+2
+    81                        ;	for (y = 0; y < uiRandomLength; y++)
+    82                        	.line	12
+    83 00:001B: 64 05        	stz	<L3+y_1
+    84 00:001D: 80 19        	bra	L10004
+    85                        L10003:
+    86                        ;	{
+    87                        	.line	13
+    88                        ;		r = (rand() % uiModulus) + uiOffset;
+    89                        	.line	14
+    90 00:001F: 22 xx xx xx  	jsl	~~rand
+    91 00:0023: A6 12        	ldx	<L2+uiModulus_0
+    92                        	xref	~~~umd
+    93 00:0025: 22 xx xx xx  	jsl	~~~umd
+    94 00:0029: 18           	clc
+    95 00:002A: 65 14        	adc	<L2+uiOffset_0
+    96 00:002C: 85 07        	sta	<L3+r_1
+    97                        ;		piRandom[y] = r;
+    98                        	.line	15
+    99 00:002E: A5 05        	lda	<L3+y_1
+   100 00:0030: 0A           	asl	A
+   101 00:0031: A8           	tay
+   102 00:0032: A5 07        	lda	<L3+r_1
+   103 00:0034: 97 09        	sta	[<L3+piRandom_1],Y
+   104                        ;	}
+   105                        	.line	16
+   106 00:0036: E6 05        	inc	<L3+y_1
+   107                        L10004:
+   108 00:0038: A5 05        	lda	<L3+y_1
+   109 00:003A: C5 10        	cmp	<L2+uiRandomLength_0
+   110 00:003C: 90 E1        	bcc	L10003
+   111                        ;	return piRandom;
+   112                        	.line	17
+   113 00:003E: A6 0B        	ldx	<L3+piRandom_1+2
+   114 00:0040: A5 09        	lda	<L3+piRandom_1
+   115 00:0042: A8           	tay
+   116 00:0043: A5 0E        	lda	<L2+2
+   117 00:0045: 85 14        	sta	<L2+2+6
+   118 00:0047: A5 0D        	lda	<L2+1
+   119 00:0049: 85 13        	sta	<L2+1+6
+   120 00:004B: 2B           	pld
+   121 00:004C: 3B           	tsc
+   122 00:004D: 18           	clc
+   123 00:004E: 69 12 00     	adc	#L2+6
+   124 00:0051: 1B           	tcs
+   125 00:0052: 98           	tya
+   126 00:0053: 6B           	rtl
+   127                        ;}
+   128                        	.line	18
+   129                        	.endblock	18
+   130             0000000C   L2	equ	12
+   131             00000005   L3	equ	5
+   132                        	ends
+   133                        	efunc
+   134                        	.endfunc	18,5,12
+   135                        	.line	18
+   136                        ;
+   137                        ;
+   138                        	.line	19
+   139                        	.file	"C:\Work\Andre65\Tide\Video\Random.c",5
+   140                        	xref	~~farmalloc
+   141                        	xref	~~rand
+   142                        	.sym	~~AllocateRandomArray,~~AllocateRandomAr
+                    ray,1093,2,32
+   143                        	.sym	imaxdiv_t,0,10,14,64,4
+   144                        	.sym	uintmax_t,0,18,14,32
+   145                        	.sym	intmax_t,0,7,14,32
+   146                        	.sym	uintptr_t,0,16,14,16
+   147                        	.sym	intptr_t,0,5,14,16
+   148                        	.sym	uint32_t,0,18,14,32
+   149                        	.sym	int32_t,0,7,14,32
+   150                        	.sym	uint16_t,0,16,14,16
+   151                        	.sym	int16_t,0,5,14,16
+   152                        	.sym	uint8_t,0,14,14,8
+   153                        	.sym	int8_t,0,2,14,8
+   154                        	.sym	~~farmalloc,~~farmalloc,1089,18,32
+   155                        	.sym	~~rand,~~rand,69,18,0
+   156                        	.sym	ldiv_t,0,10,14,64,2
+   157                        	.sym	div_t,0,10,14,32,1
+   158                        	.sym	wctype_t,0,16,14,16
+   159                        	.sym	wint_t,0,16,14,16
+   160                        	.sym	wchar_t,0,14,14,8
+   161                        	.sym	ptrdiff_t,0,7,14,32
+   162                        	.sym	size_t,0,16,14,16
+
+
+      Lines assembled: 162
+      Errors: 0
