@@ -68,7 +68,7 @@ void InitCircleStruct(struct SGCircle* psCircle, int16_t x, int16_t y, int16_t r
 }
 
 
-void InitCircles(struct SGCircle* pasCircle, uint16_t uiNumCircles)
+struct SGCircle* InitCircles(uint16_t uiNumCircles)
 {
 	uint16_t	i;
 	int16_t		x;
@@ -76,12 +76,18 @@ void InitCircles(struct SGCircle* pasCircle, uint16_t uiNumCircles)
 	int16_t		r;
 	int16_t		xs;
 	int16_t		ys;
+	uint16_t	rc;
+	uint16_t	gc;
+	uint16_t	bc;
+	struct SGCircle* pasCircle;
+	
+	pasCircle = farmalloc(uiNumCircles * sizeof(struct SGCircle));
 	
 	for (i = 0; i < uiNumCircles; i++)
 	{
 		x = 50 + rand() % 220;
 		y = 50 + rand() % 100;
-		r = 5 + rand() % 10;
+		r = 2 + rand() % 5;
 		xs = rand() % 6 -3;
 		if (xs >= 0)
 		{
@@ -92,8 +98,12 @@ void InitCircles(struct SGCircle* pasCircle, uint16_t uiNumCircles)
 		{
 			ys++;
 		}
-		InitCircleStruct(&pasCircle[i], x, y, r, xs, ys, 0xff);
+		rc = (rand() % 2 + 2) << 1;
+		gc = (rand() % 2 + 2) << 1;
+		bc = rand() % 2 + 2;
+		InitCircleStruct(&pasCircle[i], x, y, r, xs, ys, RGB(rc, gc, bc));
 	}
+	return pasCircle;
 }
 
 
@@ -119,9 +129,8 @@ void main(void)
 	
 	memcpy(pvBackground, (void*)GetImageMemory(), 64000);
 
-	uiNumCircles = 10;
-	pasCircle = farmalloc(uiNumCircles * sizeof(struct SGCircle));
-	InitCircles(pasCircle, uiNumCircles);
+	uiNumCircles = 40;
+	pasCircle = InitCircles(uiNumCircles);
 	
 	for (;;)
 	{
@@ -136,22 +145,7 @@ void main(void)
 
 		*((uint8_t*)0x280000) = 0;
 		SetImageParameters((void*)0x210000, 320, 200);
-#asm
-	phx
-	phy
-	pha
-	phb
-	
-	ldy #0
-	ldx #0
-	lda #63999
-	mvn $22, $21
-	
-	plb
-	pla
-	ply
-	plx
-#endasm	
+		BlockMove((void*)0x210000, (void*)0x220000, 63999);
 
 		for (i = 0; i < uiNumCircles; i++)
 		{

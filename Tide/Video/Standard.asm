@@ -35,10 +35,25 @@ _BlockMove_Dest				EQU	_BlockMove_Scratch+3+1		;RTL address + 1
 	PHB
 
 ;behaviour
+	PHK
+	PLB
+	SEP #$30
+	LONGA OFF
+	LONGI OFF
+	LDA <_BlockMove_Source+2
+	LDX #2
+	STA !Move,X
+	LDA <_BlockMove_Dest+2
+	LDX #1
+	STA !Move,X
+	REP #$30
+	LONGA ON
+	LONGI ON
 	LDX <_BlockMove_Source
 	LDY <_BlockMove_Dest
 	LDA <_BlockMove_Bytes
-	MVN $22, $20
+Move:
+	MVN $FF, $FF
 
 ;postamble
 	LDA	<_BlockMove_Scratch+2				;RTL hi, RTL lo
