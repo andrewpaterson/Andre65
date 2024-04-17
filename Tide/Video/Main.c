@@ -16,6 +16,8 @@ struct SGCircle
 
 
 extern unsigned char RGB(uint16_t r, uint16_t g, uint16_t b);
+extern unsigned char RGB(uint16_t r, uint16_t g, uint16_t b);
+extern void BlockMove(void *pvDest, void* pvSource, size_t uiBytes);
 
 
 unsigned char RGBSlow(uint16_t r, uint16_t g, uint16_t b)
@@ -124,24 +126,8 @@ void main(void)
 	for (;;)
 	{
 		SetImageParameters((void*)0x200000, 320, 200);
-#asm
-	phx
-	phy
-	pha
-	phb
-	
-	ldy #0
-	ldx #0
-	lda #63999
-	mvn $22, $20
-	
-	plb
-	pla
-	ply
-	plx
-#endasm	
-		
-	
+		BlockMove((void*)0x200000, (void*)0x220000, 63999);
+
 		for (i = 0; i < uiNumCircles; i++)
 		{
 			DrawCircleStruct(&pasCircle[i]);
