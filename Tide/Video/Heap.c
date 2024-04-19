@@ -19,11 +19,11 @@ struct SAllocation
  void* gpvCurrentHeap;
  
 
-void InitHeap(void* pvStartOfRAM, void* pvEndOfRAM)
+void InitHeap(void* pvStartOfRAM, void* pvEndOfRAM, void* pvStartOfHeap)
 {
 	gpvStartOfRAM = pvStartOfRAM;
 	gpvEndOfRAM = pvEndOfRAM;
-	gpvStartOfHeap = _END_UDATA;
+	gpvStartOfHeap = pvStartOfHeap;
 	gpvCurrentHeap = NULL;
 }
 

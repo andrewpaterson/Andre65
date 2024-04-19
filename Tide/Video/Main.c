@@ -25,6 +25,12 @@ uint8_t RGBSlow(uint16_t r, uint16_t g, uint16_t b)
 }
 
 
+static uint16_t Add(uint16_t a, uint16_t b)
+{
+	return a + b;
+}
+
+
 void DrawCircleStruct(struct SGCircle* psCircle)
 {
 	DrawCircle(psCircle->sCircle.x, psCircle->sCircle.y, psCircle->sCircle.r, psCircle->c);
@@ -79,9 +85,7 @@ struct SGCircle* InitCircles(uint16_t uiNumCircles)
 	uint16_t	gc;
 	uint16_t	bc;
 	struct SGCircle* pasCircle;
-	
-	InitHeap((void*)0x000000, (void*)0x0fffff);
-	
+
 	pasCircle = Malloc(uiNumCircles * sizeof(struct SGCircle));
 	
 	for (i = 0; i < uiNumCircles; i++)
@@ -120,6 +124,10 @@ void main(void)
 	struct SGCircle*	pasCircle;
 	uint16_t			uiNumCircles;
 	uint16_t			y;
+	
+	y =  Add(4,5);
+	
+	InitHeap((void*)0, (void*)0x0fffff, (void*)0x080000);
 
 	SetImageParameters((void*)0x200000, 320, 200);
 

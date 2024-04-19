@@ -3,7 +3,7 @@
 #include "inttypes.h"
 
 
-void InitHeap(void* pvStartOfRAM, void* pvEndOfRAM);
+void InitHeap(void* pvStartOfRAM, void* pvEndOfRAM, void* pvStartOfHeap);
 void* Malloc(uint16_t);
 void Free(void* pv);
 
