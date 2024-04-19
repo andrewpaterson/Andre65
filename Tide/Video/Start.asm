@@ -42,7 +42,7 @@ STACK   EQU   $FF7F
     XREF  _BEG_UDATA
     XREF  _END_UDATA
 
-startup SECTION 
+STARTUP SECTION 
     ORG $0000
 
 	IF	SMALL
@@ -233,7 +233,7 @@ Undefined_IRQ:
         jmp Undefined_IRQ
 	ENDS
 
-vectors:	SECTION
+VECTORS	SECTION
 	IF USING_816
 					;65C816 Vectors
         ORG $FFE4

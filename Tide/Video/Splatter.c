@@ -29,7 +29,7 @@ void DrawSplatter(void)
 	{
 		uiRandomLength = 100;
 	}
-	uiRandomLength += rand() % 12;
+	uiRandomLength += Random() % 12;
 	piRandom = AllocateRandomArray(uiRandomLength, 9, -5);
 	
 	pui = GetImageMemory();
@@ -76,6 +76,6 @@ void DrawSplatter(void)
 		}
 	}
 	
-	farfree(piRandom);
+	Free(piRandom);
 }
 

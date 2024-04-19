@@ -1,7 +1,7 @@
-#include "string.h"
 #include "stdlib.h"
 #include "inttypes.h"
 #include "Image.h"
+#include "Heap.h"
 #include "Splatter.h"
 #include "Circle.h"
 
@@ -15,12 +15,11 @@ struct SGCircle
 };
 
 
-extern unsigned char RGB(uint16_t r, uint16_t g, uint16_t b);
-extern unsigned char RGB(uint16_t r, uint16_t g, uint16_t b);
+extern uint8_t RGB(uint16_t r, uint16_t g, uint16_t b);
 extern void BlockMove(void *pvDest, void* pvSource, size_t uiBytes);
 
 
-unsigned char RGBSlow(uint16_t r, uint16_t g, uint16_t b)
+uint8_t RGBSlow(uint16_t r, uint16_t g, uint16_t b)
 {
 	return (r & 0x7) | ((g & 0x7) << 3) | ((b & 0x3) << 6);
 }
@@ -81,26 +80,28 @@ struct SGCircle* InitCircles(uint16_t uiNumCircles)
 	uint16_t	bc;
 	struct SGCircle* pasCircle;
 	
-	pasCircle = farmalloc(uiNumCircles * sizeof(struct SGCircle));
+	InitHeap((void*)0x000000, (void*)0x0fffff);
+	
+	pasCircle = Malloc(uiNumCircles * sizeof(struct SGCircle));
 	
 	for (i = 0; i < uiNumCircles; i++)
 	{
-		x = 50 + rand() % 220;
-		y = 50 + rand() % 100;
-		r = 2 + rand() % 5;
-		xs = rand() % 6 -3;
+		x = 50 + Random() % 220;
+		y = 50 + Random() % 100;
+		r = 2 + Random() % 5;
+		xs = Random() % 6 -3;
 		if (xs >= 0)
 		{
 			xs++;
 		}
-		ys = rand() % 6 -3;
+		ys = Random() % 6 -3;
 		if (ys >= 0)
 		{
 			ys++;
 		}
-		rc = (rand() % 2 + 2) << 1;
-		gc = (rand() % 2 + 2) << 1;
-		bc = rand() % 2 + 2;
+		rc = (Random() % 2 + 2) << 1;
+		gc = (Random() % 2 + 2) << 1;
+		bc = Random() % 2 + 2;
 		InitCircleStruct(&pasCircle[i], x, y, r, xs, ys, RGB(rc, gc, bc));
 	}
 	return pasCircle;
@@ -111,16 +112,17 @@ void main(void)
 {
 	uint8_t				t;
 	
-	unsigned char 		c;
+	uint8_t 			c;
 	void*				pvBackground;
-	unsigned char 		i;
+	uint8_t 			i;
 	int16_t				r;
 	
 	struct SGCircle*	pasCircle;
 	uint16_t			uiNumCircles;
 	uint16_t			y;
-	
+
 	SetImageParameters((void*)0x200000, 320, 200);
+
 	DrawColourTest();
 
 	pvBackground = (void*)0x220000;
@@ -155,7 +157,7 @@ void main(void)
 		
 		*((uint8_t*)0x280000) = 1;
 	}
-	farfree(pvBackground);
+
     return;
 }
 
