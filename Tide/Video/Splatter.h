@@ -3,7 +3,7 @@
 #include "inttypes.h"
 
 
-void DrawSplatter(void);
+void DrawSplatter(uint16_t uiModulus, int16_t uiOffset);
 
 
 #endif // __SPLATTER_H__

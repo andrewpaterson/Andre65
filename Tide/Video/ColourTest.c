@@ -7,11 +7,9 @@ void DrawBlockTest(uint16_t uiBlock, uint16_t uiColour)
     unsigned short 	xs;
 	uint8_t*		pui;
 	
-	pui = GetImageMemory();
-	for (xs = uiBlock*2*320; xs < uiBlock*2*320 + 320*2; xs++)
-	{
-		*(pui + xs) = uiColour;
-	}
+	xs = uiBlock * 2*320;
+	pui = GetImageMemory() + xs;
+	memset(pui, uiColour, 2*320);
 }
 
 

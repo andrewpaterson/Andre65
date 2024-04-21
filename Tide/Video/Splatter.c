@@ -4,7 +4,7 @@
 #include "Splatter.h"
 
 
-void DrawSplatter(void)
+void DrawSplatter(uint16_t uiModulus, int16_t uiOffset)
 {
 	int16_t x;
 	int16_t y;
@@ -30,7 +30,7 @@ void DrawSplatter(void)
 		uiRandomLength = 100;
 	}
 	uiRandomLength += Random() % 12;
-	piRandom = AllocateRandomArray(uiRandomLength, 9, -5);
+	piRandom = AllocateRandomArray(uiRandomLength, uiModulus, uiOffset);
 	
 	pui = GetImageMemory();
 	uiRetries = 10;
