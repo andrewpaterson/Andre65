@@ -216,12 +216,6 @@ void main(void)
 
 	pvBackground = (void*)0x220000;
 	
-	DumpMemory((void*)0x020000, 1, 25, 64, RGB(2, 2, 1));
-	DumpMemory((void*)0x020000, 1, 23, 64, RGB(2, 2, 1));
-	DumpMemory((void*)0x020000, 2, 25, 64, RGB(2, 2, 1));
-	DumpMemory((void*)0x020000, 3, 23, 64, RGB(2, 2, 1));
-	DumpMemory((void*)0x020000, 3, 25, 64, RGB(2, 2, 1));
-	DrawSplatter(3, -1);
 	DumpMemory((void*)0x020000, 2, 24, 64, 0xff);
 
 	for (;;)
