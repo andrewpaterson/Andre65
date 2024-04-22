@@ -43,7 +43,7 @@ behaviour:
 	PHB
 	SEP #$20
 	LONGA OFF
-	LDA #$02
+	LDA #^~~gauiFont5x7Data
 	PHA
 	PLB
 	REP #$20
@@ -108,7 +108,6 @@ no_pixel:
 	
 	PLB
 
-;postamble
 postamble:
 	LDA	<_DFCU_Scratch+2				;RTL hi, RTL lo
 	STA	<_DFCU_Parameters-1

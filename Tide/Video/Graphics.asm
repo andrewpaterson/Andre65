@@ -23,7 +23,7 @@ _RGB_B				EQU	_RGB_Scratch+3+2+2+2-1	;RTL address + r + g + 1 (+ 1 because low b
 _RGB_G				EQU	_RGB_Scratch+3+2+2-1	;RTL address + r + 1 
 _RGB_R				EQU	_RGB_Scratch+3+2-1		;RTL address + 1 
 
-;preamble
+preamble:
 	LONGI ON
 	LONGA ON
 	TSC
@@ -33,7 +33,7 @@ _RGB_R				EQU	_RGB_Scratch+3+2-1		;RTL address + 1
 	PHD
 	TCD
 
-;behaviour
+behaviour:
 	LDA <_RGB_B
 	ASL
 	ASL
@@ -54,7 +54,7 @@ _RGB_R				EQU	_RGB_Scratch+3+2-1		;RTL address + 1
 	ORA <_RGB_Result	;Result is in Accumulator
 	TAX
 
-;postamble
+postamble:
 	LDA	<_RGB_Scratch+2				;RTL hi, RTL lo
 	STA	<_RGB_Parameters-1
 	LDA	<_RGB_Scratch+1				;RTL b, rtl hi
