@@ -14,7 +14,8 @@
 	XDEF	~~RGB	;unsigned char RGB(unsigned char r, unsigned char g, unsigned char b)
 ~~RGB:
 ;Local variable space (scratch)
-_RGB_Scratch		EQU	2						;Extra space on Stack (mapped as Direct Page $1)
+_RGB_Result			EQU	1
+_RGB_Scratch		EQU	3						;Extra space on Stack (mapped as Direct Page $1)
 ;Total Stack used
 _RGB_Parameters		EQU	_RGB_Scratch+3+2+2+2	;RTL address + r + g + b
 ;Parameter Direct Page offsets
@@ -40,17 +41,17 @@ _RGB_R				EQU	_RGB_Scratch+3+2-1		;RTL address + 1
 	ASL
 	ASL
 	ASL
-	STA <1
+	STA <_RGB_Result
 	LDA <_RGB_G
 	AND #7
 	ASL
 	ASL
 	ASL
-	ORA <1
-	STA <1
+	ORA <_RGB_Result
+	STA <_RGB_Result
 	LDA <_RGB_R
 	AND #7
-	ORA <1	;Result is in Accumulator
+	ORA <_RGB_Result	;Result is in Accumulator
 	TAX
 
 ;postamble

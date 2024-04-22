@@ -224,7 +224,7 @@ void main(void)
 
 	memcpy(pvBackground, (void*)GetImageMemory(), 64000);
 
-	uiNumCircles = 3;
+	uiNumCircles = 7;
 	pasCircle = InitCircles(uiNumCircles);
 	
 	for (;;)

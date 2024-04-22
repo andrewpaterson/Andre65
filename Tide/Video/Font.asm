@@ -16,8 +16,8 @@
 ~~DrawFontCharUnsafeASM:
 ;Local variable space (scratch)
 
-_DFCU_CharMemory	EQU	2
-_DFCU_Scratch		EQU	6				;Extra space on Stack (mapped as Direct Page $1)
+_DFCU_CharMemory	EQU	1
+_DFCU_Scratch		EQU	3				;Extra space on Stack (mapped as Direct Page $1)
 
 ;Total Stack used
 _DFCU_Parameters		EQU	_DFCU_Scratch+3+4+2+2+2		;RTL address(3) + MM(4) + W(2) + char(2) + colour(2)
@@ -57,10 +57,10 @@ behaviour:
 	ASL
 	ASL
 	ASL
-	STA <_DFCU_CharMemory; (Char-32) * 4
+	STA <_DFCU_CharMemory; (Char-32) * 8
 	
 	CLC
-	ADC #<~~gauiFont5x7Data ;#(gauiFont5x7Data).low + (Char-32) * 3 + (Char-32) * 4
+	ADC #<~~gauiFont5x7Data ;#(gauiFont5x7Data).low16 + (Char-32) * 8
 	STA <_DFCU_CharMemory
 
 	LDA <_DFCU_Colour
@@ -72,13 +72,12 @@ behaviour:
 loop_Row:
 	TXY
 	LDA (<_DFCU_CharMemory),Y ; A = Pixel Pattern, B = Colour
-	LDY #5 ;x = 0
+	LDY #5 ;x = 5
 	
 loop_X:
 	LSR
 	BCC no_pixel
 
-pixel:
 	XBA ; A = Colour, B = Pixel Pattern
 	STA [<_DFCU_VideoMemory-2],Y
 	XBA ; A = Pixel Pattern, B = Colour

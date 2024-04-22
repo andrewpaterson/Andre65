@@ -4,7 +4,7 @@
 	XDEF	~~BlockMove	;extern void BlockMove(void *pvDest, void* pvSource, size_t uiBytes)
 ~~BlockMove:
 ;Local variable space (scratch)
-_BlockMove_Scratch			EQU	0						;Extra space on Stack (mapped as Direct Page 1)
+_BlockMove_Scratch			EQU	1						;Extra space on Stack (mapped as Direct Page 1)
 
 ;Total Stack used
 _BlockMove_Parameters		EQU	_BlockMove_Scratch+3+4+4+2	;RTL address + D + S + n
