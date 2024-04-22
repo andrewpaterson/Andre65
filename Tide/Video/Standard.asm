@@ -1,14 +1,5 @@
-     PW 132         ;Page Width (# of char/line) 
-     PL 100000      ;Page Length for HP Laser
-     INCLIST ON     ;Add Include files in Listing
+	INCLUDE Prolog.inc
 
-	IF	SMALL
-	ELSEIF	MEDIUM
-	ELSEIF	COMPACT
-	ELSEIF	LARGE
-	ELSE
-		EXIT         "Not Valid 'Model' type - SMALL, MEDIUM, COMPACT, or LARGE: Use -DSMALL, etc."
-	ENDIF
 
 	XDEF	~~BlockMove	;extern void BlockMove(void *pvDest, void* pvSource, size_t uiBytes)
 ~~BlockMove:

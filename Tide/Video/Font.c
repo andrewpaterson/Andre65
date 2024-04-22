@@ -1,30 +1,26 @@
 #include "stdlib.h"
 #include "stdbool.h"
 #include "Image.h"
-#include "Font5x7.c"
+#include "Font5x7.h"
 #include "Font.h"
-
-
-/* Generic to compute font bit on/off for this font */
-// #define FONT_BIT(c, column, row) \
-  // ((font_data[(c)+(column)] & 1<<(7-(row))) != 0)
 
 
 void DrawFontCharClipped(int16_t xp, int16_t yp, char c, uint8_t uiColour)
 {
-	uint8_t		uiColumn;
+	uint8_t		uiRow;
 	uint16_t	x;
 	uint16_t	y;
 	bool		b;
-	uint16_t	uiCTimes5;
+	uint16_t	uiCTimes7;
 
-	uiCTimes5 = (c << 2) + c;
-	for (x = 0; x < 5; x++)
+	c-=32;
+	uiCTimes7 = c << 3;
+	for (y = 0; y < 7; y++)
 	{
-		uiColumn = auiFont5x7Data[uiCTimes5 + x];
-		for (y = 0; y < 8; y++)
+		uiRow = gauiFont5x7Data[uiCTimes7 + y];
+		for (x = 0; x < 5; x++)
 		{
-			b = (uiColumn & (1 << y)) != 0;
+			b = (uiRow & (1 << (4-x))) != 0;
 			if (b)
 			{
 				DrawPixel(xp + x, yp + y, uiColour);
@@ -33,16 +29,9 @@ void DrawFontCharClipped(int16_t xp, int16_t yp, char c, uint8_t uiColour)
 	}
 }
 
-
 void DrawFontChar(int16_t xp, int16_t yp, char c, uint8_t uiColour)
 {
-	uint8_t		uiColumn;
-	uint16_t	x;
-	uint16_t	y;
-	bool		b;
-	uint16_t	uiCTimes5;
 	uint8_t*	puiVideoMemory;
-	uint8_t*	puiStartOfColumn;
 	uint16_t	uiWidth;
 
 	uiWidth = GetImageWidth();
@@ -63,26 +52,9 @@ void DrawFontChar(int16_t xp, int16_t yp, char c, uint8_t uiColour)
 		return;
 	}
 	
-
+	
 	puiVideoMemory = GetImageMemory() + yp * uiWidth + xp;
-	uiCTimes5 = (c << 2) + c;
-	puiStartOfColumn = puiVideoMemory;
-	for (x = 0; x < 5; x++)
-	{
-		uiColumn = auiFont5x7Data[uiCTimes5 + x];
-		for (y = 0; y < 8; y++)
-		{
-			b = (uiColumn & (1 << y)) != 0;
-			if (b)
-			{
-				*puiVideoMemory = uiColour;
-				//DrawPixel(xp + x, yp + 7 - y, uiColour);
-			}
-			puiVideoMemory += uiWidth;
-		}
-		puiStartOfColumn++;
-		puiVideoMemory = puiStartOfColumn;
-	}
+	DrawFontCharUnsafeASM(puiVideoMemory, uiWidth, c, uiColour);
 }
 
 

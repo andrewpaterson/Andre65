@@ -1,14 +1,5 @@
-     PW 132         ;Page Width (# of char/line) 
-     PL 100000      ;Page Length for HP Laser
-     INCLIST ON     ;Add Include files in Listing
+	INCLUDE Prolog.inc
 
-	IF	SMALL
-	ELSEIF	MEDIUM
-	ELSEIF	COMPACT
-	ELSEIF	LARGE
-	ELSE
-		EXIT         "Not Valid 'Model' type - SMALL, MEDIUM, COMPACT, or LARGE: Use -DSMALL, etc."
-	ENDIF
 
 ; -------------------------------------------------------------------------------------------------------------
 ;8-bit RGB format bits R0..2 G3..5 B6..7.
@@ -27,9 +18,9 @@ _RGB_Scratch		EQU	2						;Extra space on Stack (mapped as Direct Page $1)
 ;Total Stack used
 _RGB_Parameters		EQU	_RGB_Scratch+3+2+2+2	;RTL address + r + g + b
 ;Parameter Direct Page offsets
-_RGB_B				EQU	_RGB_Scratch+3+2+2+1	;RTL address + r + g + 1 (+ 1 because low byte address first)
-_RGB_G				EQU	_RGB_Scratch+3+2+1		;RTL address + r + 1 
-_RGB_R				EQU	_RGB_Scratch+3+1		;RTL address + 1 
+_RGB_B				EQU	_RGB_Scratch+3+2+2+2-1	;RTL address + r + g + 1 (+ 1 because low byte address first)
+_RGB_G				EQU	_RGB_Scratch+3+2+2-1	;RTL address + r + 1 
+_RGB_R				EQU	_RGB_Scratch+3+2-1		;RTL address + 1 
 
 ;preamble
 	LONGI ON
