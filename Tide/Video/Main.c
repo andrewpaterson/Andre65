@@ -194,8 +194,6 @@ void DumpMemory(void* pvMem, uint16_t x, uint16_t y, uint16_t uiCount, uint8_t u
 }
 
 
-char	sz[] = "ABDCEFGHIJKLMNOPQRSTUVWXYZ";
-
 void main(void)
 {
 	uint8_t				t;
@@ -218,9 +216,6 @@ void main(void)
 	pvBackground = (void*)0x220000;
 	
 	DumpMemory((void*)0x020000, 2, 24, 64, RGB(7,7,3));
-	// DrawFontText(-1, -1, sz, RGB(7,7,0));
-	// DrawFontText(-1, 7, sz, RGB(5,5,2));
-	// DrawFontText(-1, 15, sz, RGB(1,1,3));
 
 	memcpy(pvBackground, (void*)GetImageMemory(), 64000);
 

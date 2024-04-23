@@ -32,6 +32,7 @@ _DFCU_VideoMemory		EQU	_DFCU_Scratch+3+4-1			;RTL address(3) + MM(4) -1
 preamble:
 	LONGI ON
 	LONGA ON
+	
 	TSC
 	SEC
 	SBC	#_DFCU_Scratch
