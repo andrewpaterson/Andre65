@@ -19,4 +19,5 @@ wdc816cc.exe  -bs -DUSING_816 -ml -wr -wu -so -sp -lt -pb -pp -px -o Main.obj Ma
 wdc816cc.exe  -bs -DUSING_816 -ml -wr -wu -so -sp -lt -pb -pp -px -o Font5x7.obj Font5x7.c || exit /b
 wdcln.exe -C20000,00000 -g -t -sz -HB -obin\VideoUpload.bin UploadASM.obj Heap.obj Image.obj Circle.obj Polygon.obj Font.obj Random.obj Splatter.obj ColourTest.obj Font5x7.obj Main.obj GraphicsASM.obj StandardASM.obj FontASM.obj -lcl -lml || exit /b
 wdcln.exe -C20000 -g -t -sz -HIE -obin\VideoRom.hex Heap.obj Image.obj Circle.obj Polygon.obj Font.obj Random.obj Splatter.obj ColourTest.obj Font5x7.obj Main.obj StartASM.obj GraphicsASM.obj StandardASM.obj FontASM.obj -lcl -lml || exit /b
-srec_cat.exe -IGnore-Checksums bin\VideoRom.hex -Intel Mult.hex -Intel Graphics.hex -Intel -o bin/Rom.hex -Intel
+srec_cat.exe Graphics.sft -binary -offset=0x30000 -o bin/Graphics.hex -intel
+srec_cat.exe -IGnore-Checksums bin/VideoRom.hex -Intel Mult.hex -Intel bin/Graphics.hex -Intel -o bin/Rom.hex -Intel
