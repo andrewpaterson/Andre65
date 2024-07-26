@@ -7,6 +7,9 @@
 char* I16toA(int16_t num, char* str, uint16_t base);
 char* I32toA(int32_t num, char* str, uint32_t base);
 
+char* UI16toA(uint16_t num, char* str, uint16_t base);
+char* UI32toA(int32_t num, char* str, uint32_t base);
+
 
 #endif // __I_TO_A_H__
 

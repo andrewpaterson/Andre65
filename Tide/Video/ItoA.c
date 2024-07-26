@@ -46,7 +46,7 @@ char* I16toA(int16_t num, char* str, uint16_t base)
     while (num != 0) 
 	{
         rem = num % base;
-        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+        str[i++] = (rem > 9) ? (rem - 10) + 'A' : rem + '0';
         num = num / base;
     }
  
@@ -54,6 +54,35 @@ char* I16toA(int16_t num, char* str, uint16_t base)
 	{
         str[i++] = '-';
 	}
+ 
+    str[i] = '\0';
+ 
+    Reverse(str, i);
+ 
+    return &str[i];
+}
+
+
+char* UI16toA(uint16_t num, char* str, uint16_t base)
+{
+    uint16_t	i;
+	uint16_t 	rem;
+
+    i = 0;
+ 
+    if (num == 0) 
+	{
+        str[i++] = '0';
+        str[i] = '\0';
+        return &str[i];
+    }
+
+    while (num != 0) 
+	{
+        rem = num % base;
+        str[i++] = (rem > 9) ? (rem - 10) + 'A' : rem + '0';
+        num = num / base;
+    }
  
     str[i] = '\0';
  
@@ -88,7 +117,7 @@ char* I32toA(int32_t num, char* str, uint32_t base)
     while (num != 0) 
 	{
         rem = num % base;
-        str[i++] = (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+        str[i++] = (rem > 9) ? (rem - 10) + 'A' : rem + '0';
         num = num / base;
     }
  
@@ -96,6 +125,35 @@ char* I32toA(int32_t num, char* str, uint32_t base)
 	{
         str[i++] = '-';
 	}
+ 
+    str[i] = '\0';
+ 
+    Reverse(str, i);
+ 
+    return &str[i];
+}
+
+
+char* UI32toA(int32_t num, char* str, uint32_t base)
+{
+    uint16_t	i;
+	uint32_t 	rem;
+
+    i = 0;
+ 
+    if (num == 0) 
+	{
+        str[i++] = '0';
+        str[i] = '\0';
+        return &str[i];
+    }
+ 
+     while (num != 0) 
+	{
+        rem = num % base;
+        str[i++] = (rem > 9) ? (rem - 10) + 'A' : rem + '0';
+        num = num / base;
+    }
  
     str[i] = '\0';
  
