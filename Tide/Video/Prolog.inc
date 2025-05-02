@@ -4,10 +4,10 @@
 
 	IF	USING_816
 	ELSE
-		EXIT         "Not Valid Processor. Use -DUSING_816"
+		EXIT         "Not a valid processor. Use -DUSING_816"
 	ENDIF
 
 	IF	LARGE
 	ELSE
-		EXIT         "Not Valid 'Model' type.  Use -DLARGE"
+		EXIT         "Not a valid 'Model' type.  Use -DLARGE"
 	ENDIF
