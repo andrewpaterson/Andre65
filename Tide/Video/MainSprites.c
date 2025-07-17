@@ -28,6 +28,7 @@ void main(void)
 	struct SSpriteHeader*	psBackground;
 	struct SSpriteHeader*	psMakiStand;
 	struct SSpriteHeader*	psMakiWalk[6];
+	uint8_t*				puiVideoMemory;
 
 	InitHeap((void*)0, (void*)0x0fffff, (void*)0x080000);
 
@@ -85,7 +86,11 @@ void main(void)
 			i++;
 		}
 		
+		puiVideoMemory = GetImageMemory();
+		
 		DrawSprite(0, 0, psBackground);
+		//DrawSpriteOpaqueUnsafeASM(puiVideoMemory, 320, psBackground);
+		//BlockMove((void*)0x200000, (void*)0x030008, 64000);
 		DrawSprite(70, 84, psMakiStand);
 
 		strcpy(sz, "Done!");

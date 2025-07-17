@@ -19,12 +19,11 @@ START:
 	; Initialise Native Mode
 	CLC
 	XCE
-	REP   #$38         ;16 bit registers and clear decimal mode
+	REP   #$38         	;16 bit registers and clear decimal mode
 	LONGI ON
 	LONGA ON
 	LDA   #STACK
 	TCS
-
 
 	; Copy the first 8 banks from ROM into RAM
 	LDA	#$FFFF
@@ -67,7 +66,7 @@ START:
 	LDY #$0000
 	MVN #$07, #$17
 
-; Set RAM/ROM mapping and fast clock
+	; Set RAM/ROM mapping and fast clock
 	SEP	#$30
 	LONGA	OFF
 	LONGI	OFF
@@ -97,15 +96,13 @@ clear_screen:
 	REP   #$20         ;16 bit accum
 	LONGA ON
 
-; Transfer control to the real program.
+	; Transfer control to the main program.
 	JSL	~~main
 WAIT:
 	WAI
 	JMP WAIT
 
     ;   Install C IRG Handler
-
-
 IRQ:	
 		LONGA	ON
 		LONGI	ON
@@ -164,10 +161,9 @@ VECTORS	SECTION
 		dw	Undefined_IRQ	; $FFF6 - IRQRVD(816Emulation)
 		dw	Undefined_IRQ	; $FFF8 - ABORT(816Emulation)
 
-					; Common Vectors for all CPUs
+							; Common Vectors for all CPUs
 		dw	Undefined_IRQ	; $FFFA -  NMIRQ (ALL)
-		dw	START		; $FFFC -  RESET (ALL)
+		dw	START			; $FFFC -  RESET (ALL)
 		dw	Undefined_IRQ	; $FFFE -  IRQBRK (ALL)
     ENDS
     END
-

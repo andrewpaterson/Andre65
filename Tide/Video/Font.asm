@@ -12,20 +12,21 @@
 ;Stack and Direct Page start at about the same address.
 
 
-	XDEF	~~DrawFontCharUnsafeASM	;void DrawFontCharUnsafe(uint8_t* puiVideoMemory, uint16_t uiWidth, char c, uint8_t uiColour)
+	XDEF	~~DrawFontCharUnsafeASM	;void DrawFontCharUnsafe(uint8_t* puiVideoMemory, uint16_t uiVideoWidth, char c, uint8_t uiColour)
 ~~DrawFontCharUnsafeASM:
 ;Local variable space (scratch)
 
-_DFCU_CharMemory	EQU	1
-_DFCU_Scratch		EQU	3				;Extra space on Stack (mapped as Direct Page $1)
+_DFCU_CharMemory		EQU	1
+;Extra space on Stack (mapped as Direct Page $1)
+_DFCU_Scratch			EQU	3 							; CM(2) + 1
 
 ;Total Stack used
-_DFCU_Parameters		EQU	_DFCU_Scratch+3+4+2+2+2		;RTL address(3) + MM(4) + W(2) + char(2) + colour(2)
+_DFCU_Parameters		EQU	_DFCU_Scratch+3+4+2+2+2		;RTL address(3) + VM(4) + VW(2) + char(2) + colour(2)
 ;Parameter Direct Page offsets
-_DFCU_Colour			EQU	_DFCU_Scratch+3+4+2+2+2-1	;RTL address(3) + MM(4) + W(2) + char(2) + colour(2) -1
-_DFCU_Char				EQU	_DFCU_Scratch+3+4+2+2-1		;RTL address(3) + MM(4) + W(2) + char(2) -1
-_DFCU_Width				EQU	_DFCU_Scratch+3+4+2-1		;RTL address(3) + MM(4) + W(2) -1
-_DFCU_VideoMemory		EQU	_DFCU_Scratch+3+4-1			;RTL address(3) + MM(4) -1
+_DFCU_Colour			EQU	_DFCU_Scratch+3+4+2+2+2-1	;RTL address(3) + VM(4) + VW(2) + char(2) + colour(2) -1
+_DFCU_Char				EQU	_DFCU_Scratch+3+4+2+2-1		;RTL address(3) + VM(4) + VW(2) + char(2) -1
+_DFCU_VideoWidth		EQU	_DFCU_Scratch+3+4+2-1		;RTL address(3) + VM(4) + VW(2) -1
+_DFCU_VideoMemory		EQU	_DFCU_Scratch+3+4-1			;RTL address(3) + VM(4) -1
 
 	XREF ~~gauiFont5x7Data
 
@@ -91,7 +92,7 @@ no_pixel:
 	LONGA ON
 	LDA <_DFCU_VideoMemory-2
 	CLC
-	ADC <_DFCU_Width
+	ADC <_DFCU_VideoWidth
 	STA <_DFCU_VideoMemory-2
 	
 	LDA <_DFCU_Colour
